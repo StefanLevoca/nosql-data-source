@@ -9,7 +9,8 @@ public enum DaoFactory {
 	
 	private JdbcTemplate jdbcTemplate;
 	private StudentDao studentDao;
-	
+	private DownloadDao downloadDao;
+
 	public synchronized JdbcTemplate getJDBCTemplateLocal() {
 		if (jdbcTemplate == null) {
 			MysqlDataSource dataSource = new MysqlDataSource();
@@ -40,4 +41,12 @@ public enum DaoFactory {
 		}
 		return studentDao;
 	}
+	
+	public synchronized DownloadDao getDownloadDao() {
+		if (downloadDao == null) {
+			downloadDao = new MysqlDownloadDao(getJDBCTemplateServer());
+		}
+		return downloadDao;
+	}
+
 }
